@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog</title>
+  <style>
+    body{margin:0;font-family:'Radio Canada',sans-serif;background-color:white;color:black;text-align:center;}
+    h1,h2{font-weight:300;}
+    input,button{font-size:16px;padding:10px;margin:10px 0;width:100%;max-width:300px;display:block;border-radius:20px;}
+    button{background-color:black;color:white;border:none;cursor:pointer;}
+    #login-screen{margin-top:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+    #blog-screen{padding:20px;display:none;}
+    .hidden{display:none;}
+    .header{display:flex;justify-content:center;align-items:center;position:relative;}
+    #user-name{font-size:24px;font-weight:500;cursor:pointer;}
+    #logout-button{padding:10px 20px;font-size:18px;display:none;background-color:black;color:white;border-radius:10px;position:absolute;top:50px;left:50%;transform:translateX(-50%);z-index:10;}
+    #notes-container{margin-top:20px;}
+    .note{font-size:18px;text-align:left;position:relative;padding-bottom:10px;margin-bottom:20px;border-bottom:1px solid lightgray;}
+    .note-title{font-size:20px;font-weight:bold;cursor:pointer;}
+    .note-content{display:none;font-size:16px;margin-top:10px;white-space:pre-wrap;} /* Preserva saltos de línea */
+    .note-date{font-size:12px;color:gray;position:absolute;bottom:0;right:0;}
+    .edit-text{font-size:12px;color:gray;margin-top:10px;text-align:left;}
+    #add-note-button{position:fixed;bottom:20px;right:20px;background-color:black;color:white;font-size:36px;border-radius:50%;width:60px;height:60px;border:none;cursor:pointer;}
+    #note-modal{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);display:none;justify-content:center;align-items:center;z-index:10;}
+    #note-modal .modal-content{background-color:white;padding:20px;width:90%;max-width:500px;border-radius:10px;}
+    textarea{width:100%;height:100px;font-size:18px;padding:10px;border-radius:10px;}
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+      const loginScreen=document.getElementById('login-screen');
+      const blogScreen=document.getElementById('blog-screen');
+      const firstNameInput=document.getElementById('first-name');
+      const lastNameInput=document.getElementById('last-name');
+      const userNameElement=document.getElementById('user-name');
+      const addNoteButton=document.getElementById('add-note-button');
+      const notesContainer=document.getElementById('notes-container');
+      const fileInput=document.getElementById('file-input');
+      const logoutButton=document.getElementById('logout-button');
+      const noteModal=document.getElementById('note-modal');
+      const noteTextArea=document.getElementById('note-text');
+      const noteTitleInput=document.getElementById('note-title');
+      const saveNoteButton=document.getElementById('save-note');
+      let notes=[];
+      let userName='';
+      let editingNoteIndex=null;
+
+      document.getElementById('login-button').addEventListener('click',()=>{
+        const firstName=firstNameInput.value;
+        const lastName=lastNameInput.value;
+        if(firstName&&lastName){
+          userName=`${firstName} ${lastName}`;
+          displayBlogScreen();
+        }
+      });
+
+      document.getElementById('load-key-button').addEventListener('click',()=>{fileInput.click();});
+
+      fileInput.addEventListener('change',handleFileLoad);
+
+      function handleFileLoad(event){
+        const file=event.target.files[0];
+        const reader=new FileReader();
+        reader.onload=function(e){
+          const content=e.target.result;
+          const data=JSON.parse(content);
+          userName=data.name;
+          notes=data.notes||[];
+          displayBlogScreen();
+        };
+        reader.readAsText(file);
+      }
+
+      function displayBlogScreen(){
+        loginScreen.style.display='none';
+        blogScreen.style.display='block';
+        userNameElement.textContent=userName;
+        renderNotes();
+      }
+
+      addNoteButton.addEventListener('click',()=>{
+        editingNoteIndex=null;
+        noteTitleInput.value='';
+        noteTextArea.value='';
+        noteModal.style.display='flex';
+      });
+
+      saveNoteButton.addEventListener('click',()=>{
+        const noteTitle=noteTitleInput.value;
+        const note=noteTextArea.value;
+        const date=new Date().toLocaleDateString();
+        if(noteTitle&&note){
+          if(editingNoteIndex!==null){
+            notes[editingNoteIndex]={title:noteTitle,text:note,date:date};
+          }else{
+            notes.push({title:noteTitle,text:note,date:date});
+          }
+          renderNotes();
+        }
+        noteModal.style.display='none';
+        noteTextArea.value='';
+        noteTitleInput.value='';
+      });
+
+      function renderNotes(){
+        notesContainer.innerHTML='';
+        notes.forEach((note,index)=>{
+          const noteElement=document.createElement('div');
+          noteElement.classList.add('note');
+          
+          const noteTitle=document.createElement('div');
+          noteTitle.classList.add('note-title');
+          noteTitle.textContent=note.title;
+          noteElement.appendChild(noteTitle);
+          
+          const noteContent=document.createElement('div');
+          noteContent.classList.add('note-content');
+          noteContent.textContent=note.text;
+          noteElement.appendChild(noteContent);
+
+          noteTitle.addEventListener('click',()=>{
+            noteContent.style.display=noteContent.style.display==='none'?'block':'none';
+          });
+
+          const noteDate=document.createElement('span');
+          noteDate.classList.add('note-date');
+          noteDate.textContent=note.date;
+          noteElement.appendChild(noteDate);
+
+          const editText=document.createElement('div');
+          editText.classList.add('edit-text');
+          editText.textContent='Editar...';
+          noteElement.appendChild(editText);
+
+          editText.addEventListener('click',()=>{
+            editingNoteIndex=index;
+            noteTitleInput.value=note.title;
+            noteTextArea.value=note.text;
+            noteModal.style.display='flex';
+          });
+
+          notesContainer.appendChild(noteElement);
+        });
+      }
+
+      // Mostrar el botón de cerrar sesión cuando se toca el nombre
+      userNameElement.addEventListener('click',()=>{
+        logoutButton.style.display=logoutButton.style.display==='block'?'none':'block';
+      });
+
+      // Esconder el botón de cerrar sesión cuando se hace clic fuera
+      document.addEventListener('click',(e)=>{
+        if(!userNameElement.contains(e.target)&&!logoutButton.contains(e.target)){
+          logoutButton.style.display='none';
+        }
+      });
+
+      logoutButton.addEventListener('click',()=>{
+        const data={name:userName,notes:notes};
+        const blob=new Blob([JSON.stringify(data)],{type:'text/plain'});
+        const link=document.createElement('a');
+        link.href=URL.createObjectURL(blob);
+        link.download='sesion.txt';
+        link.click();
+        blogScreen.style.display='none';
+        loginScreen.style.display='flex';
+        notes=[];
+        userName='';
+      });
+    });
+  </script>
+</head>
+<body>
+  <div id="login-screen">
+   
+   <img src="stars.svg" alt="Logo">
+    <h1>¡Hola!</h1>
+    <input id="first-name" type="text" placeholder="Nombre" />
+    <input id="last-name" type="text" placeholder="Apellido" />
+    <button id="login-button">Crear Cuenta</button>
+    <button id="load-key-button">Iniciar Sesión</button>
+    <input id="file-input" type="file" style="display:none;" />
+  </div>
+
+  <div id="blog-screen">
+    <div class="header">
+    <img src="logo.svg" alt="Logo">
+      <div id="user-name"></div>
+      <div id="logout-button">Cerrar Sesión</div>
+    </div>
+    <div id="notes-container"></div>
+    <button id="add-note-button">+</button>
+  </div>
+
+  <div id="note-modal">
+    <div class="modal-content">
+      <input id="note-title" type="text" placeholder="Título de la nota" />
+      <textarea id="note-text" placeholder="Escribe tu nota aquí..."></textarea>
+      <button id="save-note">Guardar</button>
+    </div>
+  </div>
+</body>
+</html>
