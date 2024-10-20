@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Library</title>
- <link rel="icon" href="icon.png">
+  <link rel="icon" href="icon.png">
   <style>
     /* Estilo general */
     body {
@@ -45,8 +45,8 @@
     }
 
     .book {
-      margin: 10px; /* Ajuste del margen para estar más cerca */
-      flex: 1 1 100%; /* Los libros ocuparán todo el ancho en todas las pantallas */
+      margin: 10px;
+      flex: 1 1 100%;
       max-width: 100%;
       box-sizing: border-box;
     }
@@ -65,12 +65,12 @@
     /* Ajustes para pantallas grandes */
     @media (min-width: 769px) {
       .book {
-        flex: 1 1 calc(25% - 20px); /* Los libros se ajustan a cuatro por fila en pantallas grandes */
-        max-width: calc(25% - 20px); /* Ajuste del ancho máximo */
+        flex: 1 1 calc(25% - 20px);
+        max-width: calc(25% - 20px);
       }
 
       .book img {
-        max-width: 80%; /* Limita el tamaño de los SVG en pantallas grandes */
+        max-width: 80%;
         height: auto;
       }
     }
@@ -79,7 +79,7 @@
     .modal {
       display: none;
       position: fixed;
-      z-index: 2000; /* Asegura que el modal esté sobre el header */
+      z-index: 2000;
       left: 0;
       top: 0;
       width: 100%;
@@ -100,7 +100,7 @@
 
     .modal-content embed {
       width: 100%;
-      height: 90%;
+      height: 80%;
     }
 
     .close {
@@ -116,6 +116,26 @@
     .close:hover {
       color: #ccc;
     }
+
+    /* Estilo para el botón de descarga */
+    .download-btn {
+      background-color: #EFCBBF;
+      border: none;
+      padding: 10px 20px;
+      color: #2D4756;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      display: block;
+      margin-top: 10px;
+      text-align: center;
+      text-decoration: none; /* Elimina la línea en el texto del botón */
+    }
+
+    .download-btn:hover {
+      background-color: #eab7a6;
+    }
+
   </style>
 </head>
 <body>
@@ -124,7 +144,6 @@
   </header>
 
   <div id="books">
-    <!-- Repite esta estructura para más libros -->
     <div class="book">
       <img src="portada/book1.svg" alt="Book 1" onclick="openPDF('libro/book1.pdf')">
     </div>
@@ -145,11 +164,9 @@
       <img src="portada/book5.svg" alt="Book 5" onclick="openPDF('libro/book5.pdf')">
     </div>
     
-    
     <div class="book">
       <img src="portada/book6.svg" alt="Book 6" onclick="openPDF('libro/book6.pdf')">
     </div>
-    
     
     <div class="book">
       <img src="portada/book7.svg" alt="Book 7" onclick="openPDF('libro/book7.pdf')">
@@ -159,31 +176,29 @@
       <img src="portada/book8.svg" alt="Book 8" onclick="openPDF('libro/book8.pdf')">
     </div>
 
- <div class="book">
+    <div class="book">
       <img src="portada/book9.svg" alt="Book 9" onclick="openPDF('libro/book9.pdf')">
     </div>
 
- <div class="book">
+    <div class="book">
       <img src="portada/book10.svg" alt="Book 10" onclick="openPDF('libro/book10.pdf')">
     </div>
 
- <div class="book">
+    <div class="book">
       <img src="portada/book11.svg" alt="Book 11" onclick="openPDF('libro/book11.pdf')">
     </div>
     
-     <div class="book">
+    <div class="book">
       <img src="portada/book12.svg" alt="Book 12" onclick="openPDF('libro/book12.pdf')">
     </div>
+</div>
 
-
-
-
-  </div>
 
   <div id="pdfModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closePDF()">&times;</span>
       <embed id="pdfViewer" src="" type="application/pdf">
+      <a id="downloadBtn" class="download-btn" href="" download>Descargar</a>
     </div>
   </div>
 
@@ -192,7 +207,11 @@
     function openPDF(pdfUrl) {
       const modal = document.getElementById('pdfModal');
       const pdfViewer = document.getElementById('pdfViewer');
+      const downloadBtn = document.getElementById('downloadBtn');
+
       pdfViewer.src = pdfUrl;
+      downloadBtn.href = pdfUrl;
+
       modal.style.display = 'flex';
     }
 
@@ -200,6 +219,7 @@
     function closePDF() {
       const modal = document.getElementById('pdfModal');
       const pdfViewer = document.getElementById('pdfViewer');
+      
       pdfViewer.src = '';
       modal.style.display = 'none';
     }
