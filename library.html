@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library</title>
+ <link rel="icon" href="icon.png">
+  <style>
+    /* Estilo general */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F3EAE3;
+      color: #2D4756;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header */
+    header {
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      height: 100px;
+      display: flex;
+      align-items: center;
+    }
+
+    header img {
+      height: 150px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    /* Sección de libros */
+    #books {
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 140px; /* Para evitar que los libros queden debajo del header fijo */
+    }
+
+    .book {
+      margin: 10px; /* Ajuste del margen para estar más cerca */
+      flex: 1 1 100%; /* Los libros ocuparán todo el ancho en todas las pantallas */
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .book img {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .book img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Ajustes para pantallas grandes */
+    @media (min-width: 769px) {
+      .book {
+        flex: 1 1 calc(25% - 20px); /* Los libros se ajustan a cuatro por fila en pantallas grandes */
+        max-width: calc(25% - 20px); /* Ajuste del ancho máximo */
+      }
+
+      .book img {
+        max-width: 80%; /* Limita el tamaño de los SVG en pantallas grandes */
+        height: auto;
+      }
+    }
+
+    /* Modal para mostrar el PDF */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000; /* Asegura que el modal esté sobre el header */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      position: relative;
+      background-color: #F3EAE3;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      height: 80%;
+    }
+
+    .modal-content embed {
+      width: 100%;
+      height: 90%;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 30px;
+      color: #2D4756;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .close:hover {
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html"><img src="librarylogo.svg" alt="Logo"></a>
+  </header>
+
+  <div id="books">
+    <!-- Repite esta estructura para más libros -->
+    <div class="book">
+      <img src="portada/book1.svg" alt="Book 1" onclick="openPDF('libro/book1.pdf')">
+    </div>
+
+    <div class="book">
+      <img src="portada/book2.svg" alt="Book 2" onclick="openPDF('libro/book2.pdf')">
+    </div>
+
+    <div class="book">
+      <img src="portada/book3.svg" alt="Book 3" onclick="openPDF('libro/book3.pdf')">
+    </div>
+    
+    <div class="book">
+      <img src="portada/book4.svg" alt="Book 4" onclick="openPDF('libro/book4.pdf')">
+    </div>
+    
+    <div class="book">
+      <img src="portada/book5.svg" alt="Book 5" onclick="openPDF('libro/book5.pdf')">
+    </div>
+    
+    
+    <div class="book">
+      <img src="portada/book6.svg" alt="Book 6" onclick="openPDF('libro/book6.pdf')">
+    </div>
+    
+    
+    <div class="book">
+      <img src="portada/book7.svg" alt="Book 7" onclick="openPDF('libro/book7.pdf')">
+    </div>
+    
+    <div class="book">
+      <img src="portada/book8.svg" alt="Book 8" onclick="openPDF('libro/book8.pdf')">
+    </div>
+
+ <div class="book">
+      <img src="portada/book9.svg" alt="Book 9" onclick="openPDF('libro/book9.pdf')">
+    </div>
+
+ <div class="book">
+      <img src="portada/book10.svg" alt="Book 10" onclick="openPDF('libro/book10.pdf')">
+    </div>
+
+ <div class="book">
+      <img src="portada/book11.svg" alt="Book 11" onclick="openPDF('libro/book11.pdf')">
+    </div>
+    
+     <div class="book">
+      <img src="portada/book12.svg" alt="Book 12" onclick="openPDF('libro/book12.pdf')">
+    </div>
+
+
+
+
+  </div>
+
+  <div id="pdfModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closePDF()">&times;</span>
+      <embed id="pdfViewer" src="" type="application/pdf">
+    </div>
+  </div>
+
+  <script>
+    // Abre el modal y muestra el PDF seleccionado
+    function openPDF(pdfUrl) {
+      const modal = document.getElementById('pdfModal');
+      const pdfViewer = document.getElementById('pdfViewer');
+      pdfViewer.src = pdfUrl;
+      modal.style.display = 'flex';
+    }
+
+    // Cierra el modal
+    function closePDF() {
+      const modal = document.getElementById('pdfModal');
+      const pdfViewer = document.getElementById('pdfViewer');
+      pdfViewer.src = '';
+      modal.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
