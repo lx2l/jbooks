@@ -98,9 +98,9 @@
       height: 80%;
     }
 
-    .modal-content embed {
+    .modal-content iframe {
       width: 100%;
-      height: 80%;
+      height: 100%;
     }
 
     .close {
@@ -116,26 +116,6 @@
     .close:hover {
       color: #ccc;
     }
-
-    /* Estilo para el botón de descarga */
-    .download-btn {
-      background-color: #EFCBBF;
-      border: none;
-      padding: 10px 20px;
-      color: #2D4756;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
-      display: block;
-      margin-top: 10px;
-      text-align: center;
-      text-decoration: none; /* Elimina la línea en el texto del botón */
-    }
-
-    .download-btn:hover {
-      background-color: #eab7a6;
-    }
-
   </style>
 </head>
 <body>
@@ -144,82 +124,78 @@
   </header>
 
   <div id="books">
-    <div class="book">
-      <img src="portada/book1.svg" alt="Book 1" onclick="openPDF('libro/book1.pdf')">
-    </div>
+  <div class="book">
+    <img src="portada/book1.svg" alt="Book 1" onclick="openPDF('https://drive.google.com/file/d/1uQ3z2thXcu6TMdGAUca15-QLSIZNuDSn/preview')">
+  </div>
 
-    <div class="book">
-      <img src="portada/book2.svg" alt="Book 2" onclick="openPDF('libro/book2.pdf')">
-    </div>
+  <div class="book">
+    <img src="portada/book2.svg" alt="Book 2" onclick="openPDF('https://drive.google.com/file/d/1uR660vGaoT1ASvfV654BJLM-lo_09Vjs/preview')">
+  </div>
 
-    <div class="book">
-      <img src="portada/book3.svg" alt="Book 3" onclick="openPDF('libro/book3.pdf')">
-    </div>
-    
-    <div class="book">
-      <img src="portada/book4.svg" alt="Book 4" onclick="openPDF('libro/book4.pdf')">
-    </div>
-    
-    <div class="book">
-      <img src="portada/book5.svg" alt="Book 5" onclick="openPDF('libro/book5.pdf')">
-    </div>
-    
-    <div class="book">
-      <img src="portada/book6.svg" alt="Book 6" onclick="openPDF('libro/book6.pdf')">
-    </div>
-    
-    <div class="book">
-      <img src="portada/book7.svg" alt="Book 7" onclick="openPDF('libro/book7.pdf')">
-    </div>
-    
-    <div class="book">
-      <img src="portada/book8.svg" alt="Book 8" onclick="openPDF('libro/book8.pdf')">
-    </div>
+  <div class="book">
+    <img src="portada/book3.svg" alt="Book 3" onclick="openPDF('https://drive.google.com/file/d/1uUFvtpm1CCB4NuvpDvEAzj8Gif-THPS7/preview')">
+  </div>
 
-    <div class="book">
-      <img src="portada/book9.svg" alt="Book 9" onclick="openPDF('libro/book9.pdf')">
-    </div>
+  <div class="book">
+    <img src="portada/book4.svg" alt="Book 4" onclick="openPDF('https://drive.google.com/file/d/1uVchKIHrPIfTW8CkVBIZ9PUvDByJ7EiN/preview')">
+  </div>
 
-    <div class="book">
-      <img src="portada/book10.svg" alt="Book 10" onclick="openPDF('libro/book10.pdf')">
-    </div>
+  <div class="book">
+    <img src="portada/book5.svg" alt="Book 5" onclick="openPDF('https://drive.google.com/file/d/1uX3kktppRAga31vwWWNz_e42bcZNLtrx/preview')">
+  </div>
 
-    <div class="book">
-      <img src="portada/book11.svg" alt="Book 11" onclick="openPDF('libro/book11.pdf')">
-    </div>
-    
-    <div class="book">
-      <img src="portada/book12.svg" alt="Book 12" onclick="openPDF('libro/book12.pdf')">
-    </div>
+  <div class="book">
+    <img src="portada/book6.svg" alt="Book 6" onclick="openPDF('https://drive.google.com/file/d/1ucAz8ufwVMmK3WvAOt7juL_WI7Z6Dhwh/preview')">
+  </div>
+
+  <div class="book">
+    <img src="portada/book7.svg" alt="Book 7" onclick="openPDF('https://drive.google.com/file/d/1uePmQhM5c4Z1pTV8TRt1-sLj4ld0GsHS/preview')">
+  </div>
+
+  <div class="book">
+    <img src="portada/book8.svg" alt="Book 8" onclick="openPDF('https://drive.google.com/file/d/1uiO04OnOel0BKo9_X3QpUJnXMcV1vMoi/preview')">
+  </div>
+
+  <div class="book">
+    <img src="portada/book9.svg" alt="Book 9" onclick="openPDF('https://drive.google.com/file/d/1ukgyRT4zvDGqY2chU13gplyZBKWbkp2D/preview')">
+  </div>
+
+  <div class="book">
+    <img src="portada/book10.svg" alt="Book 10" onclick="openPDF('https://drive.google.com/file/d/1ulxOfjdOxL3NuE9N9dt8pLliUwnmXr9S/preview')">
+  </div>
+
+  <div class="book">
+    <img src="portada/book11.svg" alt="Book 11" onclick="openPDF('https://drive.google.com/file/d/1ur2O8ieBrgwO6fWnaf7NWaOhM7fYA-uP/preview')">
+  </div>
+
+  <div class="book">
+    <img src="portada/book12.svg" alt="Book 12" onclick="openPDF('https://drive.google.com/file/d/1urZ0cSnh-36swQJ4riAxApf4sd75UI0q/preview')">
+  </div>
 </div>
 
+  </div>
 
   <div id="pdfModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closePDF()">&times;</span>
-      <embed id="pdfViewer" src="" type="application/pdf">
-      <a id="downloadBtn" class="download-btn" href="" download>Descargar</a>
+      <iframe id="pdfViewer" src="" frameborder="0"></iframe>
     </div>
   </div>
 
   <script>
-    // Abre el modal y muestra el PDF seleccionado
     function openPDF(pdfUrl) {
       const modal = document.getElementById('pdfModal');
       const pdfViewer = document.getElementById('pdfViewer');
-      const downloadBtn = document.getElementById('downloadBtn');
 
       pdfViewer.src = pdfUrl;
-      downloadBtn.href = pdfUrl;
 
       modal.style.display = 'flex';
     }
 
-    // Cierra el modal
     function closePDF() {
       const modal = document.getElementById('pdfModal');
       const pdfViewer = document.getElementById('pdfViewer');
-      
+
       pdfViewer.src = '';
       modal.style.display = 'none';
     }
